@@ -48,30 +48,24 @@ $(SRC_DIR)/%.o: $(SRC_DIR)/%.cpp
 $(EXECUTABLE): $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(OBJ_FILES) -o $(EXECUTABLE)
 
-# Rule to check the OS and open the documentation
-check_os:
-ifeq ($(OS),Windows_NT)
-	@echo "Detected OS: Windows"
-	@echo "Opening documentation..."
-	start docs/html/index.html
+# Check the OS and set documentation path
+UNAME := $(shell uname)
+INDEX_PATH := docs/html/globals.html
+
+ifeq ($(UNAME),Darwin)
+    # macOS-specific commands
+    CMD=open
+else ifeq ($(UNAME),Windows_NT)
+    # Windows-specific commands
+    CMD=start
 else
-	UNAME_S := $(shell uname -s)
-	ifeq ($(UNAME_S),Linux)
-		@echo "Detected OS: Linux"
-		@echo "Opening documentation..."
-		xdg-open docs/html/index.html
-	else ifeq ($(UNAME_S),Darwin)
-		@echo "Detected OS: macOS"
-		@echo "Opening documentation..."
-		open docs/html/index.html
-	else
-		@echo "Unsupported OS"
-		exit 1
-	endif
+    # Unix-specific commands
+    CMD=xdg-open
 endif
 
 # To visualize documentation
-docs: check_os
+open_docs: 
+	@$(CMD) $(INDEX_PATH)
 
 test:
 	@mkdir -p ${BUILD_DIR}
@@ -86,4 +80,4 @@ fclean:
 	@rm -rf $(TARGET) $(SRC_DIR)/*.o $(EXECUTABLE)
 
 # Phony targets
-.PHONY: all build_docker run break erase so bin fclean test
+.PHONY: all build_docker run break erase so bin fclean test open_docs check_os
