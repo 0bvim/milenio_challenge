@@ -1,5 +1,3 @@
-**README: Using the Makefile**
-
 This project uses a Makefile to automate building a shared library (`libcsv.so`) and tests. The Makefile streamlines the compilation, linking, and cleaning processes, making development more efficient.
 
 **Prerequisites:**
