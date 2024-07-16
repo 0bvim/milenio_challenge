@@ -1,5 +1,3 @@
-I'd be glad to create a README file that explains how to use the provided Makefile:
-
 **README: Using the Makefile**
 
 This project uses a Makefile to automate building a shared library (`libcsv.so`) and tests. The Makefile streamlines the compilation, linking, and cleaning processes, making development more efficient.
